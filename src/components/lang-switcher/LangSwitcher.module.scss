@@ -1,0 +1,42 @@
+.section {
+    display: flex;
+    margin-bottom: 1.5rem;
+}
+
+.btns-wrapper {
+    position: relative;
+}
+
+.btn {
+    position: relative;
+    font-size: 1.4rem;
+    line-height: 1.6rem;
+    font-weight: 500;
+    
+    background-color: transparent;
+
+    padding: 5px 10px;
+    border: none;
+    border-radius: var(--radius);
+    transition: color, background-color .3s;
+
+    &:hover:not(:disabled) {
+        background-color: rgb(232, 233, 235);
+    }
+}
+
+.highlight {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background-color: rgb(221, 221, 226);
+    transition: left .3s cubic-bezier(0,.68,.19,.96);
+    border-radius: var(--radius);
+}
+
+
+@media (min-width: 800px) {
+    .section {
+        justify-content: flex-end;
+    }
+}

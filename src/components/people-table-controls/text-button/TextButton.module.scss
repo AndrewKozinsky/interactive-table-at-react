@@ -1,0 +1,38 @@
+.btn {
+    font-size: 1.5rem;
+    line-height: 1.9rem;
+    color: rgba(30, 30, 30, .75);
+    font-weight: 500;
+    background-color: transparent;
+
+    padding: .3rem .8rem;
+    border: none;
+    border-radius: var(--radius);
+    transition: background-color .3s;
+
+    &:hover {
+        color: rgba(30, 30, 30, .95);
+        background-color: rgb(225, 225, 225);
+
+        & .text-wrapper {
+            border-bottom-color: transparent;
+        }
+    }
+
+    &:disabled {
+        color: var(--active-color);
+
+        &:hover {
+            background-color: transparent;
+        }
+
+        .text-wrapper {
+            border-bottom-color: transparent;
+        }
+    }
+}
+
+.text-wrapper {
+    border-bottom: 1px dashed rgba(30, 30, 30, .25);
+    transition: border-bottom-color .2s;
+}

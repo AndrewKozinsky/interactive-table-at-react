@@ -1,0 +1,141 @@
+
+.card {
+    position: relative;
+    display: grid;
+    grid-template-areas: "block1 block2"
+        "block3 block3";
+    grid-template-columns: 1fr auto;
+    align-items: start;
+
+    background-color: white;
+    overflow: hidden;
+    padding: 11px 11px 11px 80px;
+    box-shadow: 0 1px 1px rgba(115, 98, 141, .1);
+    border-radius: var(--radius);
+}
+
+.cardFavourite:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120px;
+    height: 120px;
+    max-height: 100%;
+    background-image: linear-gradient(-135deg, rgba(255, 200, 78, .3) 0, rgba(255, 200, 78, 0) 50%);
+}
+
+.block1 {
+    grid-area: block1;
+    display: flex;
+    flex-wrap: wrap;
+}
+.block2 {
+    grid-area: block2;
+    display: none;
+    //background-color: aquamarine;
+}
+.block3 {
+    grid-area: block3;
+    display: none;
+}
+
+.userPic {
+    position: absolute;
+    top: 15px;
+    left: 11px;
+    width: 58px;
+}
+
+.name {
+    font-size: 1.6rem;
+    line-height: 2.2rem;
+    font-weight: 700;
+    margin-right: 5px;
+}
+
+.favSmallBtnWrapper {
+    margin-top: -6px;
+}
+
+.age {
+    font-size: 1.5rem;
+    line-height: 2.2rem;
+    color: rgb(150, 150, 150);
+    width: 100%;
+    margin-top: 1px;
+}
+
+.phone {
+    font-size: 1.6rem;
+    line-height: 2.2rem;
+    margin-top: 1px;
+    width: 100%;
+}
+
+.phrase {
+    font-size: 1.5rem;
+    line-height: 2.3rem;
+}
+
+
+@media (min-width: 400px) {
+    .card {
+        padding: 13px 11px 11px 80px;
+    }
+    .userPic {
+        top: 17px;
+    }
+    .favSmallBtnWrapper {
+        display: none;
+    }
+    .block2 {
+        display: block;
+
+        & > * {
+            transform: translateY(-5px);
+        }
+    }
+    .name {
+        //margin-right: 1rem;
+    }
+    .age {
+        //width: auto;
+        //margin-right: auto;
+    }
+    .phone {
+        //margin-top: 3px;
+    }
+
+    .block3 {
+        display: block;
+        //background-color: aquamarine;
+        margin-top: 8px;
+        //width: 100%;
+    }
+}
+
+@media (min-width: 600px) {
+    .card {
+        padding: 16px 15px 15px 103px;
+    }
+
+    .userPic {
+        top: 20px;
+        left: 19px;
+        width: 70px;
+    }
+
+    .name {
+        font-size: 2rem;
+        line-height: 2.6rem;
+    }
+
+    .age {
+        margin-top: 2px;
+    }
+
+    .block3 {
+        margin-top: 10px;
+    }
+}

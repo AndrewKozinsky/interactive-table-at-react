@@ -1,0 +1,51 @@
+// Кнопка добавления в Избранное
+.btn {
+    box-sizing: content-box;
+    background-color: transparent;
+    background-clip: content-box;
+    border: none;
+    border-radius: var(--radius);
+}
+
+.btnSmall {
+    width: 20px;
+    height: 20px;
+
+    background-image: url("./icons/small-star.svg");
+    background-position: 3px 3px;
+    padding: 3px;
+
+    &:hover {
+        background-position: -17px 3px;
+    }
+}
+
+.btnSmallSelected {
+    background-position: -38px 3px;
+
+    &:hover {
+        background-position: -38px 3px;
+    }
+}
+
+
+.btnBig {
+    width: 25px;
+    height: 24px;
+    background-image: url("./icons/star.svg");
+    background-position: 5px 5px;
+    padding: 5px;
+
+    &:hover {
+        background-position: -20px 5px;
+    }
+}
+
+.btnBigSelected {
+    background-position: -45px 5px;
+
+    &:hover {
+        background-position: -45px 5px;
+    }
+}
+// / Кнопка добавления в Избранное

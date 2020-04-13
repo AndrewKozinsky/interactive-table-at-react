@@ -1,0 +1,104 @@
+/* Подключение шрифтов */
+@font-face {
+    font-family: 'Muller';
+    src: url('../fonts/Fontfabric-MullerRegular.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Muller';
+    src: url('../fonts/Fontfabric-MullerRegularItalic.woff2') format('woff2');
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Muller';
+    src: url('../fonts/Fontfabric-MullerMedium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Muller';
+    src: url('../fonts/Fontfabric-MullerBold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+/* / Подключение шрифтов */
+
+
+:root{
+    font-size: 10px;
+}
+
+
+/* Для телефонов базовый размер шрифта будет больше.*/
+@media (max-device-width: 600px) {
+    :root{
+        font-size: 12px;
+    }
+}
+
+
+/* Общие настройки страницы */
+body {
+    display: flex;
+    align-items: stretch;
+
+    font-family: Muller, Helvetica, sans-serif;
+    color: var(--text-color);
+    font-size: 1.5rem;
+    line-height: 2.3rem;
+    font-weight: 300;
+    min-height: 100vh;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Стиль ссылок */
+a {
+    color: var(--link-color);
+    border-bottom: 1px solid var(--link-border-color);
+    transition: border-bottom-color .25s;
+    text-decoration: none;
+    cursor: pointer;
+}
+a:hover {
+    color: var(--link-color-hover);
+    border-bottom: 1px solid var(--link-border-color-hover);
+    transition: border-bottom-color .1s;
+}
+
+/* Стиль чёрной ссылки */
+/*.black-link {
+    color: var(--black-link-color);
+    border-bottom-color: var(--black-link-border-color);
+}*/
+/*.black-link:hover {
+    color: var(--black-link-color-hover);
+    border-bottom-color: var(--black-link-border-color-hover);
+}*/
+
+button {
+    cursor: pointer;
+
+    &:disabled {
+        color: rgb(150, 150, 150);
+        cursor: default;
+    }
+}
+
+
+#root {
+    position: relative;
+    flex-grow: 1;
+
+    background: rgb(245,243,239);
+    background: linear-gradient(135deg,  rgb(245,243,239) 0%,rgb(242,248,255) 100%);
+}
+
+
+
