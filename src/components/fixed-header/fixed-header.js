@@ -24,7 +24,9 @@ function FixedHeader() {
     // Разметка компонента
     const markup = (
         <section className="fixed-header" ref={sectionRef}>
-            <PeopleTableControls />
+            <div className="fixed-header__inner-wrapper" ref={sectionRef}>
+                <PeopleTableControls />
+            </div>
         </section>
     );
 

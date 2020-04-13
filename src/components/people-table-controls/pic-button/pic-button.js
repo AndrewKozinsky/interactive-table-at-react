@@ -10,7 +10,7 @@ import styles from './PicButton.module.scss'
  * @return {*}
  * @constructor
  */
-function PicButton({type, disabled, click}) {
+function PicButton({type, disabled, click, title}) {
 
     let classes = styles.btn + ' ';
 
@@ -22,7 +22,7 @@ function PicButton({type, disabled, click}) {
     }
 
     return (
-        <button className={classes} onClick={click} disabled={disabled} />
+        <button className={classes} onClick={click} title={title} disabled={disabled} />
     )
 }
 

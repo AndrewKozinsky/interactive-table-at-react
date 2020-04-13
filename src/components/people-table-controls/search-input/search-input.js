@@ -2,12 +2,12 @@ import React from 'react';
 import styles from './SearchInput.module.scss'
 
 
-function SearchInput({value, onChange}) {
+function SearchInput({value = '', onChange = () => {}, placeholder = ''}) {
     return (
         <input
             type="search"
             className={styles.input}
-            placeholder="Поиск имени..."
+            placeholder={placeholder}
             value={value}
             onChange={onChange}
         />

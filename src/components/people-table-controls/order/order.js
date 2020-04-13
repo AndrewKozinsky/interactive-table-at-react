@@ -6,6 +6,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {changeOrder} from "../../../store/actions";
 import PicButton from "../pic-button";
 import {changeSearchPartOfURL} from "../../../services/URLService";
+import getTexts from '../../../services/getTexts'
+import textObj from './text'
 
 
 function Order() {
@@ -13,15 +15,23 @@ function Order() {
     // Получу текущее выделенной поле
     const {order} = useSelector(state => state.peopleTableSettings);
 
+    // Получу текущий язык
+    const lang = useSelector(state => state.lang);
+
+    // Получу тексты компонента
+    let texts = getTexts(lang, textObj);
+
     const dispatch = useDispatch();
 
     // Данные для создания кнопок
     const buttonsData = [
         {
             order: 'asc',       // Как будет идти сортировка если нажать на кнопку
+            title: texts.ascBtnTitle
         },
         {
             order: 'des',
+            title: texts.desBtnTitle
         }
     ];
 
@@ -47,6 +57,7 @@ function Order() {
             <PicButton
                 type={btnData.order}
                 click={() => clickHandler(btnData.order)}
+                title={btnData.title}
                 disabled={isDisabled}
                 key={i}
             />
@@ -54,7 +65,7 @@ function Order() {
     });
 
     return (
-        <ButtonsSection header="Порядок:">
+        <ButtonsSection header={texts.header}>
             {buttons}
         </ButtonsSection>
     )

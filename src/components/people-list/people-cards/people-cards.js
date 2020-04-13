@@ -1,93 +1,41 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 import infoCardCls from './InfoCard.module.scss'
 import videoCardCls from './VideoCard.module.scss'
 import cardsCls from './Cards.module.scss'
-// import s from "../people-table/PeopleTable.module.scss";
 
 import {getImageAdress, getVideoAdress} from "../../../services/getMedia";
 import {SmallFavBtn, BigFavBtn} from "../fav-btn";
+import {
+    clearVideoDataArr,
+    setDataObjToVideoDataArr,
+    updateVideoObj, videoEndHandler,
+    videoPlaybackControl,
+    videoStartHandler
+} from "./videoControl";
 
 
-
-
-
-const positions = [];
-
-/*
-positions: [
-    { cardId: 0, top: 300, bottom: 400 },
-    { cardId: 5, top: 623, bottom: 723 },
-    { cardId: 12, top: 1533, bottom: 1633 }
-]
-*/
-
-function setNewPos(cardId, top, bottom) {
-    const idx = positions.findIndex( obj => obj.cardId === cardId);
-
-    if(idx === -1) positions.push({ cardId, top, bottom });
-    else positions[idx] = { cardId, top, bottom};
-}
-
-/*setTimeout(() => {
-    console.log(positions);
-}, 2000);*/
-
-
-function getPlayingVideoId() {
-
-    // Массив куда попадут данные о видимых видео
-    let visibleCards = [];
-
-    // Переберу все карточки и помещу в visibleCards видимые
-    positions.forEach(obj => {
-        if(obj.top > 100 && obj.bottom < window.innerHeight + 100) visibleCards.push(obj);
-    });
-    
-    if(!visibleCards.length) return null;
-
-    // Определю верхнюю координату средней линии.
-    const winMiddleLine =  Math.round( window.innerHeight / 2 );
-
-    // Какую линию занимает последняя подходящая карточка
-    let cardMiddleLine = getCardMiddleLine(visibleCards[0]);
-
-    // id подходящей карточки
-    let suitableCardId = visibleCards[0].cardId;
-
-    // Различие между средней линией страницы и средней линией карточки
-    let middleLineDiff = Math.abs( winMiddleLine - cardMiddleLine );
-    // debugger;
-
-    // Переберу карточки
-    for(let i = 1; i < visibleCards.length; i++) {
-        let card = visibleCards[i];
-
-        // Какую линию занимает эта карточка
-        let thisCardMiddleLine = getCardMiddleLine(card);
-
-        // Различие между средней линией страницы и средней линией этой карточки
-        let thisMiddleLineDiff = Math.abs( winMiddleLine - thisCardMiddleLine );
-
-        if(thisMiddleLineDiff < middleLineDiff) {
-            cardMiddleLine = thisCardMiddleLine;
-            suitableCardId = card.cardId;
-
-            middleLineDiff = thisMiddleLineDiff
-        }
-    }
-
-    return suitableCardId
-}
-
-function getCardMiddleLine(card) {
-    let cardHeight = Math.abs( card.top - card.bottom );
-
-    return card.top + cardHeight / 2
-}
 
 
 function PeopleCards({dataArr}) {
+
+    // Очистка массива videoDataArr при удалении разметки компонента.
+    useEffect(() => {
+        return () => clearVideoDataArr();
+    }, []);
+
+    // При прокрутке...
+    useEffect(() => {
+        // Вычислять какое видео нужно запускать, а какое останавливать...
+        videoPlaybackControl()
+    }, []);
+
+
+    useScrollPosition(({ prevPos, currPos }) => {
+        // Запущу воспроизведение подходящего видео
+        // console.log(55);
+        videoPlaybackControl()
+    });
 
     /*
     В data будет объект со свойствами:
@@ -101,7 +49,7 @@ function PeopleCards({dataArr}) {
         "video": "shoe"
     * */
 
-    const cards = createCards(dataArr, setNewPos);
+    const cards = createCards(dataArr);
 
     return (
         <div className={cardsCls.cardsWrapper}>
@@ -179,60 +127,40 @@ function InfoCard({data}) {
 function VideoCard({data}) {
 
     const videoRef = useRef(null);
-    let cardId = data.id;
 
-
+    // При монтировании компонента...
     useEffect(() => {
-        let sizes = videoRef.current.getBoundingClientRect();
-
-        setNewPos(cardId, sizes.top, sizes.bottom);
-
-        let topVideoId = getPlayingVideoId();
-
-        if(topVideoId === data.id) videoRef.current.play();
+        // Поставить в массив videoDataArr объект с данными о местоположении видео
+        setDataObjToVideoDataArr(videoRef.current, data.id)
     }, []);
 
 
+    // При прокрутке...
     useScrollPosition(({ prevPos, currPos }) => {
-
-        let sizes = videoRef.current.getBoundingClientRect();
-
-        setNewPos(cardId, sizes.top, sizes.bottom);
-
-        let topVideoId = getPlayingVideoId();
-
-        if(topVideoId === data.id) videoRef.current.play();
-        else videoRef.current.pause();
+        // Обновить данные о положении видео
+        updateVideoObj(videoRef.current, data.id)
     });
 
 
+    useEffect(() => {
+        videoRef.current.addEventListener('play', () => {
+            videoStartHandler(data.id)
+        });
+
+        videoRef.current.addEventListener('ended', () => {
+            videoEndHandler(data.id)
+        });
+
+    }, []);
+
+
+
     return (
-        <video className={videoCardCls['video']} controls ref={videoRef} >
+        <video className={videoCardCls.video} controls ref={videoRef} >
             <source src={getVideoAdress(data.video)} type="video/mp4" />
         </video>
     )
 }
-
-
-
-// Считаю эту функцию нужно перенести в файл со всеми функциями!
-/*function getImageAdress(name) {
-
-    switch (name) {
-        case 'cat': return catImage;
-        case 'dog': return dogImage;
-        case 'fox': return foxImage;
-        case 'koala': return koalaImage;
-        case 'lion': return lionImage;
-        case 'owl': return owlImage;
-        case 'penguin': return penguinImage;
-        case 'pig': return pigImage;
-        case 'raccoon': return raccoonImage;
-        case 'sheep': return sheepImage;
-        default: return catImage;
-    }
-}*/
-
 
 
 export default PeopleCards;

@@ -52,6 +52,16 @@ function PeopleList() {
     }, []);
 
 
+    useEffect(() => {
+        if(!peopleData) return;
+        // Дополнить и улучшить скачанные данные
+        const improvedData = improvePeopleData(peopleData, lang);
+
+        // Поставить в Хранилище обработанные данные
+        dispatch(setImprovedPeopleData(improvedData));
+    }, [lang]);
+
+
     // Отфильтровать данные по полю поиска
     let preparedData = filterDataBySearchWord(peopleDataImproved, searchWord);
 

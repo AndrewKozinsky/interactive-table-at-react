@@ -2,11 +2,12 @@ import React, {useCallback} from 'react';
 // import {useDispatch, useSelector} from "react-redux";
 // import {changeView} from "../../store/actions";
 import {changeSearchPartOfURL} from "../../../services/URLService";
-// import styles from './View.module.scss'
 import ButtonsSection from "../buttons-section/people-controls-header";
 import PicButton from "../pic-button";
 import {useDispatch, useSelector} from "react-redux";
 import {changeView} from "../../../store/actions";
+import getTexts from '../../../services/getTexts'
+import textObj from './text'
 
 
 function PeopleView() {
@@ -15,15 +16,23 @@ function PeopleView() {
     // Получу вид просмотра списка людей
     const {view} = useSelector(state => state.peopleTableSettings);
 
+    // Получу текущий язык
+    const lang = useSelector(state => state.lang);
+
+    // Получу тексты компонента
+    let texts = getTexts(lang, textObj);
+
     const dispatch = useDispatch();
 
     // Данные для создания кнопок
     const buttonsData = [
         {
             view: 'table',       // Как будет идти сортировка если нажать на кнопку
+            title: texts.tableBtnTitle
         },
         {
             view: 'cards',
+            title: texts.cardsBtnTitle
         }
     ];
 
@@ -49,6 +58,7 @@ function PeopleView() {
             <PicButton
                 type={btnData.view}
                 click={() => clickHandler(btnData.view)}
+                title={btnData.title}
                 disabled={isDisabled}
                 key={i}
             />
@@ -56,7 +66,7 @@ function PeopleView() {
     });
 
     return (
-        <ButtonsSection header="Вид:">
+        <ButtonsSection header={texts.header}>
             {buttons}
         </ButtonsSection>
     )

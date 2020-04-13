@@ -4,6 +4,8 @@ import {sortByField} from '../../../store/actions'
 import {changeSearchPartOfURL} from '../../../services/URLService'
 import ButtonsSection from "../buttons-section/people-controls-header";
 import TextButton from "../text-button";
+import getTexts from '../../../services/getTexts'
+import textObj from './text'
 
 
 /**
@@ -15,20 +17,29 @@ function Sorting() {
     // Получу текущее выделенной поле
     const {sortBy} = useSelector(state => state.peopleTableSettings);
 
+    // Получу текущий язык
+    const lang = useSelector(state => state.lang);
+
+    // Получу тексты компонента
+    let texts = getTexts(lang, textObj);
+
     const dispatch = useDispatch();
 
     // Данные для создания кнопок
     const buttonsData = [
         {
-            btnName: 'ID',  // Текст на кнопке
-            fieldName: 'id' // По какому полю будет идти сортировка если нажать на кнопку
+            value: texts.idBtnValue,  // Текст на кнопке
+            title: texts.idBtnTitle,  // Подсказка кнопки
+            fieldName: 'id', // По какому полю будет идти сортировка если нажать на кнопку
         },
         {
-            btnName: 'Имя',
+            value: texts.nameBtnValue,
+            title: texts.nameBtnTitle,
             fieldName: 'name'
         },
         {
-            btnName: 'Возраст',
+            value: texts.ageBtnValue,
+            title: texts.ageBtnTitle,
             fieldName: 'age'
         },
     ];
@@ -53,7 +64,8 @@ function Sorting() {
         return (
             <TextButton
                 click={() => clickHandler(btnData.fieldName)}
-                title={btnData.btnName}
+                value={btnData.value}
+                title={btnData.title}
                 disabled={isDisabled}
                 key={i}
             />
@@ -61,7 +73,7 @@ function Sorting() {
     });
 
     return (
-        <ButtonsSection header="Сортировка:">
+        <ButtonsSection header={texts.header}>
             {buttons}
         </ButtonsSection>
     )

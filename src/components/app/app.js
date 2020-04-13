@@ -8,7 +8,7 @@ import People from '../people';
 import './css/reset.css';
 import './css/variables.scss';
 import './css/general.scss';
-import style from './css/App.module.scss';
+import s from './css/App.module.scss';
 
 
 function App() {
@@ -16,9 +16,11 @@ function App() {
     return (
         <Provider store={store}>
             <FixedHeader />
-            <div className={style['page-wrapper']}>
-                <LangSwitcher />
-                <People />
+            <div className={s.pageWrapper}>
+                <div className={s.pageWrapperInner}>
+                    <LangSwitcher />
+                    <People />
+                </div>
             </div>
 
 

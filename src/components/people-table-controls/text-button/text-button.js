@@ -10,14 +10,14 @@ import styles from './TextButton.module.scss'
  * @return {*}
  * @constructor
  */
-function TextButton({title, disabled, click}) {
+function TextButton({title, disabled, click, value}) {
 
     let classes = styles.btn;
 
     return (
-        <button className={classes} onClick={click} disabled={disabled}>
+        <button className={classes} onClick={click} title={title} disabled={disabled}>
             <span className={styles['text-wrapper']}>
-                {title}
+                {value}
             </span>
         </button>
     )

@@ -12,7 +12,7 @@ import {
 } from './reducers'
 
 const inicialState = {
-    lang: 'rus', // rus или eng
+    lang: 'eng', // rus или eng
     people: null,
     peopleImproved: null,
     peopleTableSettings: {
