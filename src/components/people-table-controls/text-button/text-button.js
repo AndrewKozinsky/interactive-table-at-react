@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './TextButton.module.scss'
+import s from './TextButton.module.scss'
 
 
 /**
@@ -7,16 +7,15 @@ import styles from './TextButton.module.scss'
  * @param {String} title — текст на кнопке
  * @param {Boolean} active — выделена ли кнопка. Выделенная кнопка будет заблокированной.
  * @param {Function} click — функция запускаемая при щелчке по кнопке
- * @return {*}
- * @constructor
+ * @return {Object} JSX компонента.
  */
 function TextButton({title, disabled, click, value}) {
 
-    let classes = styles.btn;
+    let classes = s.btn;
 
     return (
         <button className={classes} onClick={click} title={title} disabled={disabled}>
-            <span className={styles['text-wrapper']}>
+            <span className={s.textWrapper}>
                 {value}
             </span>
         </button>

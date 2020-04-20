@@ -1,29 +1,34 @@
-import React, {useCallback} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {sortByField} from '../../../store/actions'
-import {changeSearchPartOfURL} from '../../../services/URLService'
-import ButtonsSection from "../buttons-section/people-controls-header";
+import React from 'react';
+import ButtonsSection from "../buttons-section";
 import TextButton from "../text-button";
+
+import {useDispatch, useSelector} from "react-redux";
+import {
+    sortByField
+} from '../../../store/actions'
+import {changeSearchPartOfURL} from '../../../services/URLService'
+
 import getTexts from '../../../services/getTexts'
 import textObj from './text'
 
 
 /**
- * Функция создаёт кнопки сортировки списка по полю
+ * Функция возвращает группу кнопок для изменения сортировки данных в таблице.
  * @return {Object} — JSX с кнопками сортировки
  */
 function Sorting() {
 
-    // Получу текущее выделенной поле
+    // Получу текущее выделенной поле, порядок и искомое слово
     const {sortBy} = useSelector(state => state.peopleTableSettings);
 
-    // Получу текущий язык
-    const lang = useSelector(state => state.lang);
+    // Получу текущий язык и подготовленные данные.
+    const [lang] = useSelector(state => [state.lang]);
+
+    const dispatch = useDispatch();
+
 
     // Получу тексты компонента
     let texts = getTexts(lang, textObj);
-
-    const dispatch = useDispatch();
 
     // Данные для создания кнопок
     const buttonsData = [
@@ -44,15 +49,16 @@ function Sorting() {
         },
     ];
 
-    // Обработчик нажатия на кнопку
-    const clickHandler = useCallback(
-        (field) => {
-            dispatch(sortByField(field));
 
-            changeSearchPartOfURL('sortBy', field)
-        },
-        [dispatch]
-    );
+    // Обработчик нажатия на кнопку
+    const clickHandler = (field) => {
+
+        // Поменять в Хранилище поле по которому сортируются данные.
+        dispatch(sortByField(field));
+
+        // Изменить значение свойства sortBy в URL.
+        changeSearchPartOfURL('sortBy', field);
+    };
 
 
     // Перебрать элементы массива с данными по кнопкам и вернуть массив с JSX кнопок.

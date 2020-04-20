@@ -29,6 +29,12 @@ function improvePeopleData(dataArr, lang) {
 }
 
 
+/**
+ * Функция ставит строку про возраст в правильную форму
+ * @param {Number || String} age — сколько человеку лет.
+ * @param {String} lang — текущий язык интерфейса.
+ * @return {string}
+ */
 function improveAge(age, lang) {
 
     let num = age * 1;

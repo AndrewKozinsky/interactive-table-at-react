@@ -1,10 +1,4 @@
-import {
-    SmallFavBtn,
-    BigFavBtn
-} from './fav-btn';
+import FavBtn  from './fav-btn';
 
 
-export {
-    SmallFavBtn,
-    BigFavBtn
-};
+export default FavBtn;

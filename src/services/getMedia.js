@@ -1,3 +1,4 @@
+// Адреса картинок
 import catImage from "./images/cat.svg";
 import dogImage from "./images/dog.svg";
 import foxImage from "./images/fox.svg";
@@ -9,10 +10,15 @@ import pigImage from "./images/pig.svg";
 import raccoonImage from "./images/raccoon.svg";
 import sheepImage from "./images/sheep.svg";
 
-
+// Адреса видео
 import boyVideo from './videos/boy.mp4';
 import shoeVideo from './videos/shoe.mp4';
 
+
+/**
+ * Функция принимает имя картинки и возвращает её адрес.
+ * @param {String} name — имя картинки.
+ */
 function getImageAdress(name) {
     switch (name) {
         case 'cat': return catImage;
@@ -30,6 +36,10 @@ function getImageAdress(name) {
 }
 
 
+/**
+ * Функция принимает имя видео и возвращает его адрес.
+ * @param {String} name — имя видео.
+ */
 function getVideoAdress(name) {
     switch (name) {
         case 'boy': return boyVideo;

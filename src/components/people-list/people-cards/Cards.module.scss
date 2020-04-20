@@ -1,4 +1,5 @@
 .cardsWrapper {
+    position: relative;
     display: grid;
     grid-row-gap: 1rem;
 }
@@ -22,8 +23,6 @@
     grid-row-gap: 1rem;
 }
 
-
-
 @media (min-width: 600px) {
     .wideCard {
         grid-template-columns: 1fr 1fr;
@@ -34,7 +33,6 @@
     }
 }
 
-
 @media (min-width: 800px) {
     .cardsWrapper {
         grid-row-gap: 2rem;
@@ -44,7 +42,6 @@
         grid-column-gap: 2rem;
     }
 }
-
 
 
 .outer {

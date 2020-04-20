@@ -1,7 +1,7 @@
 /**
  * Функция регулирующая показ фиксированной шапки в зависимости от прокрутки страницы.
  * @param {Number} top — значение прокрутки страницы.
- * @param {Boolean} showHeader — отрисована ли шапка
+ * @param {Boolean} showHeader — флаг сообщающий отрисована ли шапка.
  * @param {Function} setShowHeader — функция устанавливающая значение переменной showHeader
  * @param {Object} sectionRef — ref на шапку
  */
@@ -42,7 +42,7 @@ function mountHeader(sectionRef) {
 
 
 /**
- * Функция поднимает шапку чтобы она оказалась выше экрана.
+ * Функция поднимает шапку чтобы она скрылась с экрана.
  * @param {Object} sectionRef — ref на шапку.
  */
 function hideHeader(sectionRef) {

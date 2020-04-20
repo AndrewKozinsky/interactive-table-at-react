@@ -14,6 +14,10 @@
         background-position: -2.9rem 0;
     }
 
+    &:focus {
+        box-shadow: 0 0 0 1px rgba(50, 139, 242, .6);
+    }
+
     &:disabled {
         background-position: -5.8rem 0;
 
@@ -24,16 +28,16 @@
 }
 
 
-.btn--table {
+.btn_table {
     background-image: url('./icons/table.svg');
 }
-.btn--cards {
+.btn_cards {
     background-image: url('./icons/cards.svg');
 }
-.btn--asc {
+.btn_asc {
     background-image: url('./icons/asc.svg');
 }
-.btn--des {
+.btn_des {
     background-image: url('./icons/des.svg');
 }
 

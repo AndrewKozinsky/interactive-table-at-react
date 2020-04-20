@@ -5,6 +5,10 @@
     background-clip: content-box;
     border: none;
     border-radius: var(--radius);
+
+    &:focus {
+        box-shadow: 0 0 0 1px rgba(50, 139, 242, .6);
+    }
 }
 
 .btnSmall {
@@ -21,10 +25,10 @@
 }
 
 .btnSmallSelected {
-    background-position: -38px 3px;
+    background-position: -37px 3px;
 
     &:hover {
-        background-position: -38px 3px;
+        background-position: -37px 3px;
     }
 }
 

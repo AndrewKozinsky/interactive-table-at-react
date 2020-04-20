@@ -11,8 +11,8 @@ function switchLang(field) {
 
 
 /**
- * Action-функция ставящая в Хранилище массив со списком людей.
- * @param {Array} data — массив списка людей.
+ * Action-функция ставящая в Хранилище массив со списком людей скачанный с сервера.
+ * @param {Array} data — массив с данными людей.
  * @return {Object}
  */
 function setPeopleData(data) {
@@ -24,21 +24,21 @@ function setPeopleData(data) {
 
 
 /**
- * Action-функция ставящая в Хранилище массив со списком людей.
- * @param {Array} data — массив списка людей.
+ * Action-функция ставящая в Хранилище массив с данными людей готовыми для показа.
+ * @param {Array} data — массив данными людей готовыми для показа.
  * @return {Object}
  */
-function setImprovedPeopleData(data) {
+function setPreparedPeopleData(data) {
     return {
-        type: 'SET_IMPROVED_PEOPLE_DATA',
+        type: 'SET_PREPARED_PEOPLE_DATA',
         data
     }
 }
 
 
 /**
- * Action-функция ставящая в Хранилище массив со списком людей.
- * @param {String} str — поисковая строка
+ * Action-функция ставящая в Хранилище поисковую строку.
+ * @param {String} str — поисковая строка.
  * @return {Object}
  */
 function setSearchWord(str) {
@@ -50,7 +50,7 @@ function setSearchWord(str) {
 
 
 /**
- * Action-функция изменяющая текущее поле.
+ * Action-функция изменяющая текущее поле по которому сортируется таблица.
  * @param {String} field — имя поля которое должно стать текущим.
  * Есть три варианта: id, name и age
  * @return {Object}
@@ -64,7 +64,7 @@ function sortByField(field) {
 
 
 /**
- * Action-функция изменяющая метод сортировки списка людей.
+ * Action-функция меняющая порядок расположения данных в таблице людей.
  * @param {String} order — метод сортировки списка людей.
  * Есть два варианта: ascending и descending
  * @return {Object}
@@ -80,7 +80,7 @@ function changeOrder(order) {
 /**
  * Action-функция изменяющая метод сортировки списка людей.
  * @param {String} view — вид списка людей.
- * Есть два варианта: table и preview
+ * Есть два варианта: table и cards
  * @return {Object}
  */
 function changeView(view) {
@@ -92,12 +92,12 @@ function changeView(view) {
 
 
 /**
- * Action-функция изменяющая метод сортировки списка людей.
+ * Action-функция изменяющая объект с настройками сортировки, вида и порядка вывода списка людей.
  * @param {Object} settingsObj — объект с настройками вида списка людей.
  * Объект будет иметь примерно такие свойства: {
         sortBy: 'id', // id, name, age
         order: 'ascending', // ascending, descending
-        view: 'table' // table, preview
+        view: 'table' // table, cards
     }
  * @return {Object}
  */
@@ -109,6 +109,11 @@ function setPeopleTableSettings(settingsObj) {
 }
 
 
+/**
+ * Action-функция меняющая нахождение человека в Избранном.
+ * @param {Number} id — идентификатор данных в массиве объектов с данными людей где нужно поменять значение.
+ * @return {Object}
+ */
 function toggleFavoriteBtn(id) {
     return {
         type: 'TOGGLE_FAVORITE_BTN',
@@ -121,7 +126,7 @@ function toggleFavoriteBtn(id) {
 export {
     switchLang,
     setPeopleData,
-    setImprovedPeopleData,
+    setPreparedPeopleData,
     setSearchWord,
     sortByField,
     changeOrder,

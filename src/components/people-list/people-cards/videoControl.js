@@ -28,7 +28,7 @@ function clearVideoDataArr() {
 
 
 /**
- * Функция ставит в массив videoDataArr объект с данными о местоположении переданного видео
+ * Функция ставит в массив videoDataArr объект с данными о местоположении переданного видео.
  * @param {HTMLElement} videoEl — ссылка на видео.
  * @param {Number} cardId — id карточки где находится видео.
  */
@@ -103,8 +103,6 @@ function videoPlaybackControl() {
             // То позволить автоматический запуск видео.
             videoAllowedToRunAutomatically = true;
         }
-
-
     }
 
     // Получу карточку подходящую для проигрывания
@@ -129,6 +127,7 @@ function videoPlaybackControl() {
     // Поставить флаг что видео было запущено сценарием.
     videoWasRunByScript = true;
     setTimeout(() => {videoWasRunByScript = false}, 100);
+
 
     // Запустить проигрывание карточки
     let playPromise = suitableVideo.video.play();
@@ -219,8 +218,13 @@ function getVideoMiddleLine(video) {
 }
 
 
-
+/**
+ * Обработчик завершения воспроизведения видео.
+ * @param {Number} cardId — id данных карточки где находится видео, которое только что закончило воспроизведение.
+ */
 function videoEndHandler(cardId) {
+    // В массиве videoDataArr найти объект с переданным идентификатором
+    // и поставить его свойство readyToAutoPlay в false чтобы оно не начало воспроизводиться снова.
     for(let i = 0; i < videoDataArr.length; i++) {
         if(videoDataArr[i].id === cardId) {
             videoDataArr[i].readyToAutoPlay = false;

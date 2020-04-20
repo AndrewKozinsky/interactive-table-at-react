@@ -1,28 +1,31 @@
-import React, {useCallback} from 'react';
-// import {useDispatch, useSelector} from "react-redux";
-// import {changeView} from "../../store/actions";
-import {changeSearchPartOfURL} from "../../../services/URLService";
-import ButtonsSection from "../buttons-section/people-controls-header";
+import React from 'react';
+import ButtonsSection from "../buttons-section";
 import PicButton from "../pic-button";
+
+import {changeSearchPartOfURL} from "../../../services/URLService";
 import {useDispatch, useSelector} from "react-redux";
 import {changeView} from "../../../store/actions";
 import getTexts from '../../../services/getTexts'
 import textObj from './text'
 
 
+/**
+ * Функция возвращает группу кнопок для изменения вида данных в таблице.
+ * @return {Object} JSX компонента.
+ */
 function PeopleView() {
-
 
     // Получу вид просмотра списка людей
     const {view} = useSelector(state => state.peopleTableSettings);
 
-    // Получу текущий язык
+    // Получу текущий язык и подготовленные данные.
     const lang = useSelector(state => state.lang);
+
+    const dispatch = useDispatch();
 
     // Получу тексты компонента
     let texts = getTexts(lang, textObj);
 
-    const dispatch = useDispatch();
 
     // Данные для создания кнопок
     const buttonsData = [
@@ -36,16 +39,15 @@ function PeopleView() {
         }
     ];
 
+
     // Обработчик нажатия на кнопку
-    const clickHandler = useCallback(
+    const clickHandler =
         (view) => {
             dispatch(changeView(view));
 
+            // Изменить значение свойства view в URL.
             changeSearchPartOfURL('view', view)
-
-        },
-        [dispatch]
-    );
+        };
 
 
     // Перебрать элементы массива с данными по кнопкам и вернуть массив с JSX кнопок.

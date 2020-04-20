@@ -65,22 +65,13 @@ a {
     transition: border-bottom-color .25s;
     text-decoration: none;
     cursor: pointer;
-}
-a:hover {
-    color: var(--link-color-hover);
-    border-bottom: 1px solid var(--link-border-color-hover);
-    transition: border-bottom-color .1s;
-}
 
-/* Стиль чёрной ссылки */
-/*.black-link {
-    color: var(--black-link-color);
-    border-bottom-color: var(--black-link-border-color);
-}*/
-/*.black-link:hover {
-    color: var(--black-link-color-hover);
-    border-bottom-color: var(--black-link-border-color-hover);
-}*/
+    &:hover {
+        color: var(--link-color-hover);
+        border-bottom: 1px solid var(--link-border-color-hover);
+        transition: border-bottom-color .1s;
+    }
+}
 
 button {
     cursor: pointer;
@@ -96,9 +87,6 @@ button {
     position: relative;
     flex-grow: 1;
 
-    background: rgb(245,243,239);
-    background: linear-gradient(135deg,  rgb(245,243,239) 0%,rgb(242,248,255) 100%);
+    background: rgb(245, 243, 239);
+    background: linear-gradient(135deg, rgb(245, 243, 239) 0%, rgb(242, 248, 255) 100%);
 }
-
-
-

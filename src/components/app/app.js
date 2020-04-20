@@ -1,6 +1,7 @@
 import React from 'react';
 import {Provider} from 'react-redux';
 import store from '../../store/store'
+
 import FixedHeader from '../fixed-header';
 import LangSwitcher from '../lang-switcher';
 import People from '../people';
@@ -11,6 +12,10 @@ import './css/general.scss';
 import s from './css/App.module.scss';
 
 
+/**
+ * Функция возвращает корневой компонент приложения.
+ * @return {Object}
+ */
 function App() {
 
     return (
@@ -22,8 +27,6 @@ function App() {
                     <People />
                 </div>
             </div>
-
-
         </Provider>
     );
 }

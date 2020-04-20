@@ -1,12 +1,15 @@
-import React, {useRef, useEffect, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 import PeopleTableControls from "../people-table-controls/controls-wrapper";
-import {manageHeaderVisibility} from './helpers';
+import {manageHeaderVisibility} from './functions';
 import './fixed-header.scss'
 
 
+/**
+ * Функция возвращает фиксированную шапку. Она закреплена сверху и появлзнеся если немного прокрутить страницу.
+ * @return {Object} JSX компонента.
+ */
 function FixedHeader() {
-
 
     // В showHeader будет булево значение нужно ли отрисовать компонент.
     // По умолчанию он не отрисовывается на странице
@@ -33,10 +36,6 @@ function FixedHeader() {
     // Отрисовывать компонент в зависимости от значения showHeader.
     return showHeader ? markup : null;
 }
-
-
-
-
 
 
 export default FixedHeader;

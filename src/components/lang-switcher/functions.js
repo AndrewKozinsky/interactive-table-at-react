@@ -14,10 +14,10 @@ function moveHighlight(highlightRef, engBtnRef, rusBtnRef, lang) {
     // Если текущий язык — английский
     if(lang === 'eng') {
         // Получу ширину кнопки
-        const engbtnWidth = getElemWidth(engBtnRef);
+        const engBtnWidth = getElemWidth(engBtnRef);
 
         // Поставлю эту ширину подсвечивающему элементу и поставлю его влево.
-        highlight.style.width = engbtnWidth + 'px';
+        highlight.style.width = engBtnWidth + 'px';
         highlight.style.left = 0;
 
     } else {
@@ -32,15 +32,18 @@ function moveHighlight(highlightRef, engBtnRef, rusBtnRef, lang) {
 }
 
 /**
- * Функция возвращающая ширину переданного элемента
+ * Функция возвращающая ширину переданного элемента.
  * @param {Object} elemRef — ref на элемент.
  * @return {number}
  */
 function getElemWidth(elemRef) {
+    // Получить ссылку на элемент.
     let el = elemRef.current;
 
+    // Получу ширину элемента.
     const width = el.getBoundingClientRect().width;
 
+    // Округлю результат потому что ширина элемента может быть дробной.
     return Math.round(width)
 }
 

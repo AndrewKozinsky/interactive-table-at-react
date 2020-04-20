@@ -6,8 +6,7 @@ import './twister.scss'
 /**
  * Компонент крутилки с сообщением.
  * @param {String} message — сообщение, которое должно быть показано ниже крутилки
- * @return {*}
- * @constructor
+ * @return {Object} JSX компонента.
  */
 function Spinner({message}) {
     return (
@@ -20,8 +19,7 @@ function Spinner({message}) {
 
 /**
  * Крутилка
- * @return {*}
- * @constructor
+ * @return {Object} JSX компонента.
  */
 function Twister() {
     return (

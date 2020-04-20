@@ -1,3 +1,4 @@
+// Объект с переводом интерфейса.
 export default {
     placeholder: {
         rus: 'Поиск по имени',

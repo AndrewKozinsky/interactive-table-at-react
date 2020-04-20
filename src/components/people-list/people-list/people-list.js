@@ -1,80 +1,73 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useEffect, shallowEqual} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import Spinner from "../../spinner";
 import PeopleTable from "../people-table";
 import PeopleCards from "../people-cards";
-import {filterDataBySearchWord, sortPeopleData} from './functions/filterPeopleData';
-import {getPeoleData} from './functions/getPeoleData';
-import {setPeopleData, setImprovedPeopleData, setPeopleTableSettings} from '../../../store/actions';
+import {getPeopleData} from './functions/getPeopleData';
+import {setPeopleData, setPeopleTableSettings, setPreparedPeopleData} from '../../../store/actions';
 import {getUrlQueryObj} from '../../../services/URLService';
-
-// import { useScrollPosition } from '@n8tb1t/use-scroll-position'
-import {improvePeopleData} from "./functions/improvePeopleData";
+import {preparePeopleData} from "../../../services/preparePeopleData";
 
 
+/**
+ * Функция возвращает компонент...
+ * @return {Object} JSX компонента.
+ */
 function PeopleList() {
-    // Анимированная сортировка
-    // https://codepen.io/chrisdmacrae/pen/QyPboJ
 
     // Получить с Хранилища массив с данными о людях
-    const [
-        peopleData,
-        peopleDataImproved,
-        lang,
-        searchWord
-    ] = useSelector(state => [state.people, state.peopleImproved, state.lang, state.searchWord]);
+    const [ peopleData, peopleDataPrepared, lang ] = useSelector(state => [state.people, state.peoplePrepared, state.lang], shallowEqual);
 
     // Получить метод сортировки, порядок и вид.
-    const {sortBy, order, view} = useSelector(state => state.peopleTableSettings);
+    const {sortBy, order, view, searchWord} = useSelector(state => state.peopleTableSettings, shallowEqual);
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        // Получить JSON со списком людей с сервера
-        getPeoleData().then(data => {
 
+    // При загрузке компонента...
+    useEffect(() => {
+
+        // Получить значения строки запроса из URL и преобразовать в объект
+        // Это нужно чтобы настроить показ данных как это указано в URL
+        let urlSearchObj = getUrlQueryObj();
+
+        // Если в адресной строке передали настройки отображения списка людей...
+        if(Object.keys(urlSearchObj).length) {
+            // ...то поставить эти настройки в Хранилище.
+            dispatch( setPeopleTableSettings(urlSearchObj) )
+        }
+
+        // Получить JSON со списком людей с сервера
+        getPeopleData().then(data => {
             // Поставить в Хранилище скачанные данные
             dispatch(setPeopleData(data));
 
-            // Дополнить и улучшить скачанные данные
-            const improvedData = improvePeopleData(data, lang);
+            // Приготовить данные для показа (отсортировать по текущему полю и порядку)
+            let preparedData = preparePeopleData(lang, data, searchWord, (urlSearchObj.sortBy || sortBy), (urlSearchObj.order || order));
 
-            // Поставить в Хранилище обработанные данные
-            dispatch(setImprovedPeopleData(improvedData));
+            // Поставить в Хранилище данные готовые для показа
+            dispatch(setPreparedPeopleData(preparedData));
         });
 
-
-        let urlSearchObj = getUrlQueryObj();
-
-        if(Object.keys(urlSearchObj).length) {
-            dispatch( setPeopleTableSettings(urlSearchObj) )
-        }
     }, []);
 
 
     useEffect(() => {
         if(!peopleData) return;
-        // Дополнить и улучшить скачанные данные
-        const improvedData = improvePeopleData(peopleData, lang);
+        // Приготовить данные для показа (отсортировать по текущему полю и порядку)
+        let preparedData = preparePeopleData(lang, peopleData, searchWord, sortBy, order);
 
-        // Поставить в Хранилище обработанные данные
-        dispatch(setImprovedPeopleData(improvedData));
-    }, [lang]);
-
-
-    // Отфильтровать данные по полю поиска
-    let preparedData = filterDataBySearchWord(peopleDataImproved, searchWord);
-
-    // Отсортировать данные по текущему полю и порядку
-    preparedData = sortPeopleData(preparedData, sortBy, order);
+        // Поставить в Хранилище данные готовые для показа
+        dispatch(setPreparedPeopleData(preparedData));
+    }, [lang, peopleData, sortBy, order, view, searchWord]);
 
 
-
+    // Сформирую разметку компонента.
     let markup = <Spinner message='Загрузка списка' />;
-    if(preparedData) {
-        markup = (view === 'table') ? <PeopleTable dataArr={preparedData} /> : <PeopleCards dataArr={preparedData} />
-    }
 
+    if(peopleDataPrepared) {
+        markup = (view === 'table') ? <PeopleTable /> : <PeopleCards />
+    }
 
     return markup;
 }

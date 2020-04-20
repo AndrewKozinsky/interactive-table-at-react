@@ -2,7 +2,7 @@
  * Функция получает с сервера JSON со списком людей
  * @return {Promise<null|any>}
  */
-async function getPeoleData() {
+async function getPeopleData() {
     const adress = 'http://andrewkozinsky.ru/samples/chu/data-provider/people-data.php';
 
     const fetchSettings = {
@@ -23,5 +23,5 @@ async function getPeoleData() {
 
 
 export {
-    getPeoleData
+    getPeopleData
 };

@@ -1,18 +1,26 @@
 
 .rowsWrapper {
+    position: relative;
     display: grid;
     grid-row-gap: 1rem;
 }
 
 .row {
     position: relative;
+    top: 0;
+    left: 0;
+
     display: flex;
+    width: 100%;
     background-color: white;
     overflow: hidden;
+    box-sizing: border-box;
     box-shadow: 0 1px 1px rgba(115, 98, 141, .1);
 
     padding: 11px 11px 11px 90px;
     border-radius: var(--radius);
+
+    transition: transform .5s cubic-bezier(0,.14,.01,1);
 }
 
 .rowFavourite:before {

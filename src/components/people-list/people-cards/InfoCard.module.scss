@@ -5,6 +5,7 @@
     grid-template-areas: "block1 block2"
         "block3 block3";
     grid-template-columns: 1fr auto;
+    grid-template-rows: repeat(2, min-content);
     align-items: start;
 
     background-color: white;
@@ -33,7 +34,6 @@
 .block2 {
     grid-area: block2;
     display: none;
-    //background-color: aquamarine;
 }
 .block3 {
     grid-area: block3;
@@ -68,9 +68,15 @@
 
 .phone {
     font-size: 1.6rem;
-    line-height: 2.2rem;
+    line-height: 2rem;
     margin-top: 1px;
     width: 100%;
+
+    & a {
+        &:focus {
+            box-shadow: 0 0 0 1px rgba(50, 139, 242, .6);
+        }
+    }
 }
 
 .phrase {
@@ -96,22 +102,10 @@
             transform: translateY(-5px);
         }
     }
-    .name {
-        //margin-right: 1rem;
-    }
-    .age {
-        //width: auto;
-        //margin-right: auto;
-    }
-    .phone {
-        //margin-top: 3px;
-    }
 
     .block3 {
         display: block;
-        //background-color: aquamarine;
         margin-top: 8px;
-        //width: 100%;
     }
 }
 
@@ -133,6 +127,10 @@
 
     .age {
         margin-top: 2px;
+    }
+
+    .phone {
+        margin-top: 3px;
     }
 
     .block3 {

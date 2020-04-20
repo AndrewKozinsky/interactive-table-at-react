@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import s from "./FavBtn.module.scss";
 import {toggleFavoriteBtn} from "../../../store/actions";
@@ -6,58 +6,44 @@ import getTexts from '../../../services/getTexts'
 import textObj from './text'
 
 
-function SmallFavBtn({data}) {
+
+/**
+ * Функция возвращает кнопку добавления (удаления) в Избранное
+ * @return {Object} JSX компонента.
+ */
+function FavBtn({data, type}) {
+
 
     // Получу текущий язык
-    const lang = useSelector(state => state.lang);
+    const [lang] = useSelector(state => [state.lang, state.people]);
+
+    const dispatch = useDispatch();
 
     // Получу тексты компонента
     let texts = getTexts(lang, textObj);
 
-    const dispatch = useDispatch();
 
-    const onBtnClick = useCallback((id) => {
-        dispatch(toggleFavoriteBtn(id))
-    }, [dispatch]);
+    // Обработчик щелчка по кнопке
+    const onBtnClick = (id) => {
+        // Поставить/убрать у объекта статус нахождения в Избранном
+        dispatch(toggleFavoriteBtn(id));
+    };
 
     // Подпись у кнопки добавления в Избранное
-    // const title = data.favourite ? "Убрать из Избранного" : "Добавить в Избранное";
     const title = data.favourite ? texts.titleRemove : texts.titleAdd;
 
     // Классы кнопки добавления в Избранное
-    let classes = `${s.btn}  ${s.btnSmall}`;
-    if(data.favourite) classes += ` ${s.btnSmallSelected}`;
+    let classes = s.btn += ' ';
+    classes += (type === 'small') ? s.btnSmall : s.btnBig;
+
+    if(data.favourite) {
+        classes += ' ';
+        classes += (type === 'small') ? s.btnSmallSelected : s.btnBigSelected;
+    }
 
 
     return <button className={classes} onClick={ () => onBtnClick(data.id)} title={title} />;
 }
 
 
-function BigFavBtn({data}) {
-
-    // Получу текущий язык
-    const lang = useSelector(state => state.lang);
-
-    // Получу тексты компонента
-    let texts = getTexts(lang, textObj);
-
-    const dispatch = useDispatch();
-
-    const onBtnClick = useCallback((id) => {
-        dispatch(toggleFavoriteBtn(id))
-    }, [dispatch]);
-
-    // Подпись у кнопки добавления в Избранное
-    const title = data.favourite ? texts.titleRemove : texts.titleAdd;
-
-    // Классы кнопки добавления в Избранное
-    let classes = `${s.btn}  ${s.btnBig}`;
-    if(data.favourite) classes += ` ${s.btnBigSelected}`;
-
-    return <button className={classes} onClick={ () => onBtnClick(data.id)} title={title} />;
-}
-
-export {
-    SmallFavBtn,
-    BigFavBtn
-};
+export default FavBtn;
