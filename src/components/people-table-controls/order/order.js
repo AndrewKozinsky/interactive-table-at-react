@@ -1,12 +1,11 @@
 import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {changeOrder, setPreparedPeopleData} from "../../../store/actions";
+import {changeOrder} from "../../../store/actions";
 import ButtonsSection from "../buttons-section/";
 import PicButton from "../pic-button";
 import {changeSearchPartOfURL} from "../../../services/URLService";
 import getTexts from '../../../services/getTexts'
 import textObj from './text'
-import {preparePeopleData} from "../../../services/preparePeopleData";
 
 
 /**
@@ -16,10 +15,10 @@ import {preparePeopleData} from "../../../services/preparePeopleData";
 function Order() {
 
     // Получу текущее выделенной поле и порядок
-    const {sortBy, order, searchWord} = useSelector(state => state.peopleTableSettings);
+    const {order} = useSelector(state => state.peopleTableSettings);
 
     // Получу текущий язык и подготовленные данные.
-    const [lang, peopleData] = useSelector(state => [state.lang, state.people]);
+    const lang = useSelector(state => state.lang);
 
     const dispatch = useDispatch();
 
@@ -44,12 +43,6 @@ function Order() {
         (order) => {
             // Поставить в Хранилище переданное поле сортировки таблицы.
             dispatch(changeOrder(order));
-
-            // Приготовить данные для показа (отсортировать по текущему полю и порядку)
-            let preparedData = preparePeopleData(lang, peopleData, searchWord, sortBy, order);
-
-            // Поставить в Хранилище данные готовые для показа
-            dispatch(setPreparedPeopleData(preparedData));
 
             // Изменить значение свойства order в URL.
             changeSearchPartOfURL('order', order)

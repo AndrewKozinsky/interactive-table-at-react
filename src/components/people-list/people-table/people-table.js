@@ -1,4 +1,4 @@
-import React, {shallowEqual, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState, shallowEqual} from 'react';
 import {useSelector} from "react-redux";
 import FavBtn from '../fav-btn';
 import s from './PeopleTable.module.scss'
@@ -22,21 +22,43 @@ import {
  */
 function PeopleTable() {
 
-    // Свойство needToUpdate необходимо чтобы спровоцировать перерисовку компонента при необходимост.
-    let [needToUpdate, setNeedToUpdate] = useState(1);
-
-    // Получу искомое слово
-    const {searchWord} = useSelector(state => state.peopleTableSettings);
-
     // Получу текущий язык и подготовленные данные.
     const [lang, peopleDataPrepared] = useSelector(state => [state.lang, state.peoplePrepared], shallowEqual);
 
+    // Получить метод сортировки, порядок и вид.
+    const {searchWord} = useSelector(state => state.peopleTableSettings, shallowEqual);
+
+    // Свойство needToUpdate необходимо чтобы спровоцировать перерисовку компонента при необходимост.
+    let [needToUpdate, setNeedToUpdate] = useState(1);
+
+    // Тут будет храниться значение последнего значения поисковой фразы
+    let [lastSearchWord, setLastSearchWord] = useState(peopleDataPrepared.length);
+
     const wrapperRef = useRef(null);
+
+
+    useEffect(() => {
+        setNeedToUpdate(Math.random());
+    }, [lang]);
 
 
     // Этот useEffect срабатывает при изменеии peopleDataPrepared.
     // В этом свойстве хранится новый порядок расположения рядов.
     useEffect(() => {
+
+        // Если lastSearchWord не равен searchWord, то значит в поиск что-то ввели
+        if(lastSearchWord !== searchWord) {
+            // Поставлю эту поисковую фразу в Состояние
+            setLastSearchWord(searchWord);
+
+            // Обновлю разметку таблицы.
+            setNeedToUpdate(Math.random());
+
+            // Анимацию делать не нужно, поэтому завершу функцию.
+            return;
+        }
+
+
 
         // Все операции ниже требуются чтобы при изменении peopleDataPrepared
         // плавно перенести существующий ряд на новое место показав как именно происходит сортировка.
@@ -45,11 +67,9 @@ function PeopleTable() {
         // В rowsPositionsMap будет массив вида: [ {id: 120, height: 54, top: 0}, {id: 41, height: 54, top: 64} ]
         const rowsPositionsMap = createRowsPositionMap(wrapperRef.current);
 
-
         // На основе данных из peopleDataPrepared вычислить на какой высоте должны располагаться ряды после сортировки.
         // В rowsPositionsMap будет массив вида: [ {id: 120, height: 54, top: 0, newTop: 6528}, {id: 79, height: 54, top: 64, newTop: 3648} ]
         setNewTopToRowsPositionMap(peopleDataPrepared, rowsPositionsMap);
-
 
         // Поставить значение корректирующей координаты
         // В rowsPositionsMap будет массив вида: [ {id: 120, height: 54, top: 0, newTop: 6528, correlationTop: 6528}, {id: 41, height: 54, top: 64, newTop: 9536, correlationTop: 9472} ]
@@ -82,9 +102,9 @@ function PeopleTable() {
                     clearStyle(wrapperRef.current);
                 }, 0);
 
-            }, 0);
+            }, 50);
 
-        }, 1000);
+        }, 600);
 
     }, [peopleDataPrepared]);
 
@@ -101,7 +121,7 @@ function PeopleTable() {
                 {rows}
             </section>
         )
-    }, [lang, searchWord, needToUpdate])
+    }, [lang, needToUpdate])
 }
 
 
@@ -150,4 +170,7 @@ function Row({data}) {
 
 
 
-export default PeopleTable;
+export {
+    PeopleTable,
+    Row
+};

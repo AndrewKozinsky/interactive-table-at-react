@@ -1,7 +1,7 @@
 import React, {useEffect, shallowEqual} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import Spinner from "../../spinner";
-import PeopleTable from "../people-table";
+import {PeopleTable} from "../people-table";
 import PeopleCards from "../people-cards";
 import {getPeopleData} from './functions/getPeopleData';
 import {setPeopleData, setPeopleTableSettings, setPreparedPeopleData} from '../../../store/actions';

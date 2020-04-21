@@ -1,2 +1,8 @@
-import PeopleTable from './people-table';
-export default PeopleTable
+import {
+    PeopleTable,
+    Row
+} from './people-table';
+export {
+    PeopleTable,
+    Row
+}

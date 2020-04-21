@@ -161,7 +161,7 @@ function clearTransformStyle(wrapperElem) {
  */
 function clearStyle(wrapperElem) {
     for(let row of wrapperElem.children) {
-        row.style = null;
+        row.removeAttribute('style');
     }
 }
 
