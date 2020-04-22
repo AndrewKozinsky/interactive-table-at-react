@@ -104,6 +104,7 @@ function setCorrelationTopCoord(rowsObjArr) {
 }
 
 
+
 /**
  * Функция проходит все ряды и ставил transform: translateY() в style.
  * Это приведёт к тому, что ряды плавно переместятся на новое место.

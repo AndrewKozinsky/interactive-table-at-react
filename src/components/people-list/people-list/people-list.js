@@ -3,8 +3,8 @@ import {useDispatch, useSelector} from "react-redux";
 import Spinner from "../../spinner";
 import {PeopleTable} from "../people-table";
 import PeopleCards from "../people-cards";
-import {getPeopleData} from './functions/getPeopleData';
-import {setPeopleData, setPeopleTableSettings, setPreparedPeopleData} from '../../../store/actions';
+import {getPeopleData} from './getPeopleData';
+import {setPeopleTableSettings, setPeopleData, setPreparedPeopleData} from '../../../store/actions';
 import {getUrlQueryObj} from '../../../services/URLService';
 import {preparePeopleData} from "../../../services/preparePeopleData";
 
@@ -16,7 +16,7 @@ import {preparePeopleData} from "../../../services/preparePeopleData";
 function PeopleList() {
 
     // Получить с Хранилища массив с данными о людях
-    const [ peopleData, peopleDataPrepared, lang ] = useSelector(state => [state.people, state.peoplePrepared, state.lang], shallowEqual);
+    const [ peopleData, peopleDataPrepared, lang ] = useSelector(state => [state.people, state.peoplePrepared, state.lang]);
 
     // Получить метод сортировки, порядок и вид.
     const {sortBy, order, view, searchWord} = useSelector(state => state.peopleTableSettings, shallowEqual);
@@ -52,14 +52,17 @@ function PeopleList() {
     }, []);
 
 
+    // При изменении параметров вида рядов...
     useEffect(() => {
         if(!peopleData) return;
+
         // Приготовить данные для показа (отсортировать по текущему полю и порядку)
         let preparedData = preparePeopleData(lang, peopleData, searchWord, sortBy, order);
 
         // Поставить в Хранилище данные готовые для показа
         dispatch(setPreparedPeopleData(preparedData));
     }, [lang, peopleData, sortBy, order, view, searchWord]);
+
 
 
     // Сформирую разметку компонента.

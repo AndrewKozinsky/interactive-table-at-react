@@ -22,7 +22,7 @@ function Sorting() {
     const {sortBy} = useSelector(state => state.peopleTableSettings);
 
     // Получу текущий язык и подготовленные данные.
-    const [lang] = useSelector(state => [state.lang]);
+    const lang = useSelector(state => state.lang);
 
     const dispatch = useDispatch();
 

@@ -24,7 +24,8 @@ function switchLang(state, action) {
 function setPeopleData(state, action) {
     // Скопировать объект Хранилища.
     const copyState = {...state};
-    copyState.people = action.data;
+
+    copyState.people = [...action.data];
 
     // Возвратить обновлённый объект Хранилища.
     return copyState

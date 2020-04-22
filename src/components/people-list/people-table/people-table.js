@@ -10,8 +10,8 @@ import {
     setTranslateY,
     setTransitionStyleToZero,
     clearTransformStyle,
-    clearStyle
-} from "./function";
+    clearStyle,
+} from "./functions/rows-transition";
 
 
 
@@ -31,10 +31,13 @@ function PeopleTable() {
     // Свойство needToUpdate необходимо чтобы спровоцировать перерисовку компонента при необходимост.
     let [needToUpdate, setNeedToUpdate] = useState(1);
 
+    // const dispatch = useDispatch();
+
     // Тут будет храниться значение последнего значения поисковой фразы
     let [lastSearchWord, setLastSearchWord] = useState(peopleDataPrepared.length);
 
     const wrapperRef = useRef(null);
+
 
 
     useEffect(() => {
@@ -57,7 +60,6 @@ function PeopleTable() {
             // Анимацию делать не нужно, поэтому завершу функцию.
             return;
         }
-
 
 
         // Все операции ниже требуются чтобы при изменении peopleDataPrepared
@@ -110,12 +112,14 @@ function PeopleTable() {
 
 
 
-    // Создать разметку рядов.
-    const rows = peopleDataPrepared.map(data => {
-        return <Row data={data} key={data.id} />
-    });
 
     return useMemo(() => {
+
+        // Создать разметку рядов.
+        const rows = peopleDataPrepared.map(data => {
+            return <Row data={data} key={data.id} />
+        });
+
         return (
             <section className={s.rowsWrapper} ref={wrapperRef}>
                 {rows}
@@ -145,6 +149,7 @@ function Row({data}) {
 
 
     let rowClasses = s.row;
+    if(data.isVisible) rowClasses += ` row-opened`;
     if(data.favourite) rowClasses += ` ${s.rowFavourite}`;
 
 

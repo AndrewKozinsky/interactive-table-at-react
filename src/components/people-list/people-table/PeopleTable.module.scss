@@ -20,7 +20,7 @@
     padding: 11px 11px 11px 90px;
     border-radius: var(--radius);
 
-    transition: transform .5s cubic-bezier(0,.14,.01,1);
+    transition: transform .5s cubic-bezier(0,.14,.01,1), opacity .5s;
 }
 
 .rowFavourite:before {
@@ -88,7 +88,6 @@
         display: flex;
         align-items: center;
         padding-left: 5px;
-        //background-color: mediumaquamarine;
     }
     .name {
         margin-right: 1rem;

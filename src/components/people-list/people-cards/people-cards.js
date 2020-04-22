@@ -12,9 +12,9 @@ import {
     clearVideoDataArr,
     setDataObjToVideoDataArr,
     updateVideoObj,
+    videoStartHandler,
     videoEndHandler,
     videoPlaybackControl,
-    videoStartHandler
 } from "./videoControl";
 
 
@@ -28,6 +28,7 @@ function PeopleCards() {
     // Получу текущий язык и подготовленные данные.
     const [peopleDataPrepared] = useSelector(state => [state.peoplePrepared]);
 
+    // Ссылка на обёртку рядов с карточками
     const wrapperRef = useRef(null);
 
 
@@ -36,16 +37,16 @@ function PeopleCards() {
         return () => clearVideoDataArr();
     }, []);
 
-    // При отрисовке элементов...
+
     useEffect(() => {
         // Вычислять какое видео нужно запускать, а какое останавливать...
-        videoPlaybackControl()
+        videoPlaybackControl();
     }, [peopleDataPrepared]);
 
     // При прокрутке...
     useScrollPosition(({ prevPos, currPos }) => {
         // Запущу воспроизведение подходящего видео
-        videoPlaybackControl()
+        videoPlaybackControl();
     });
 
 
@@ -156,19 +157,6 @@ function VideoCard({data}) {
 
     // При монтировании компонента...
     useEffect(() => {
-        // Поставить в массив videoDataArr объект с данными о местоположении видео
-        setDataObjToVideoDataArr(videoRef.current, data.id)
-    }, []);
-
-
-    // При прокрутке...
-    useScrollPosition(({ prevPos, currPos }) => {
-        // Обновить данные о положении видео
-        updateVideoObj(videoRef.current, data.id)
-    });
-
-    // При монтировании компонента...
-    useEffect(() => {
         // Поставить обработчик на событие play у видео.
         videoRef.current.addEventListener('play', () => {
             videoStartHandler(data.id)
@@ -179,8 +167,16 @@ function VideoCard({data}) {
             videoEndHandler(data.id)
         });
 
+        // Поставить в массив videoDataArr объект с данными о местоположении видео
+        setDataObjToVideoDataArr(videoRef.current, data.id)
     }, []);
 
+
+    // При прокрутке...
+    useScrollPosition(({ prevPos, currPos }) => {
+        // Обновить данные о положении видео
+        updateVideoObj(videoRef.current, data.id)
+    });
 
 
     return (

@@ -145,7 +145,6 @@ function videoPlaybackControl() {
 
     // Поместить в переменную ссылку на проигрываемое видео
     playedVideo = suitableVideo.video;
-
 }
 
 
@@ -219,6 +218,31 @@ function getVideoMiddleLine(video) {
 
 
 /**
+ * Обработчик начала воспроизведения видео
+ * @param {Number} cardId — id карточки с видео
+ */
+function videoStartHandler(cardId) {
+
+    // Если видео было запущено сценарием, то завершить эту функцию.
+    if(videoWasRunByScript) return;
+
+    // Видео запущено пользователем...
+
+    // Остановить воспроизведение текущего видео
+    if(playedVideo) playedVideo.pause();
+
+    // Найти видео, которое запустил пользователь и поместить в переменную ссылку на проигрываемое видео
+    playedVideo = videoDataArr.find(obj => {
+        return obj.id === cardId
+    });
+
+    // Запретить автоматический запуск видео пока запущенное видео не скроется из вида.
+    videoAllowedToRunAutomatically = false;
+}
+
+
+
+/**
  * Обработчик завершения воспроизведения видео.
  * @param {Number} cardId — id данных карточки где находится видео, которое только что закончило воспроизведение.
  */
@@ -233,33 +257,10 @@ function videoEndHandler(cardId) {
     }
 
     // Обнулить ссылку на проигрываемое видео.
-    playedVideo = null
-}
+    playedVideo = null;
 
-
-/**
- * Обработчик начала воспроизведения видео
- * @param {Number} cardId — id карточки с видео
- */
-function videoStartHandler(cardId) {
-
-    // Если видео было запущено сценарием, то завершить эту функцию.
-    if(videoWasRunByScript) return;
-
-    // Остановить воспроизведение текущего видео
-    if(playedVideo) playedVideo.pause();
-
-    // Найти видео, которое запустил пользователь
-    let thisVideo = videoDataArr.find(obj => {
-        return obj.id === cardId
-    });
-
-
-    // Поместить в переменную ссылку на проигрываемое видео
-    playedVideo = thisVideo.video;
-
-    // Запретить автоматический запуск видео пока запущенное видео не скроется из вида.
-    videoAllowedToRunAutomatically = false;
+    // Запустить другие видео если есть на экране
+    videoPlaybackControl()
 }
 
 
@@ -268,7 +269,7 @@ export {
     clearVideoDataArr,
     setDataObjToVideoDataArr,
     updateVideoObj,
-    videoPlaybackControl,
+    videoStartHandler,
     videoEndHandler,
-    videoStartHandler
+    videoPlaybackControl,
 }

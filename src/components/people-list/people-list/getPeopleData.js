@@ -13,8 +13,8 @@ async function getPeopleData() {
 
     try {
         return await fetch(adress, fetchSettings)
-        .then( data => data.json())
-        .then( data => data);
+            .then( data => data.json())
+            .then( data => data);
 
     } catch(err) {}
 

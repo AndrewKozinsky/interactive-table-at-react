@@ -15,7 +15,7 @@ function FavBtn({data, type}) {
 
 
     // Получу текущий язык
-    const [lang] = useSelector(state => [state.lang, state.people]);
+    const lang = useSelector(state => state.lang);
 
     const dispatch = useDispatch();
 
